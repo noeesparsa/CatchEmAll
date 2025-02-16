@@ -1,0 +1,22 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "files": ["**/*.css"],
+  "rules": {
+    "unit-allowed-list": ["rem", "%", "deg", "ms", "s"],
+    "selector-class-pattern": ["^[a-z][-a-zA-Z0-9_]+$", {
+      "message": "Expected class name to be kebab-case"
+    }],
+    "custom-property-pattern": [
+      "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+      {
+        "message": "Expected custom property name to be kebab-case"
+      }
+    ],
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": ["global"]
+      }
+    ]
+  }
+}
