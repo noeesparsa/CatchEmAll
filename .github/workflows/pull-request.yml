@@ -30,10 +30,10 @@ jobs:
       - name: Run tests
         run: npm run test:coverage
 
-      - name: Upload coverage to Codacy
-        run: |
-          export CODACY_PROJECT_TOKEN=${{ secrets.CODACY_PROJECT_TOKEN }}
-          bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage/lcov.info
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Build project
         run: npm run build
