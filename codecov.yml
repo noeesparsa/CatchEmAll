@@ -1,0 +1,20 @@
+coverage:
+  status:
+    patch: false
+    project:
+      default:
+        target: "80%"
+  range: 70..90 # First number represents red, and second represents green
+  # (default is 80..100)
+  round: down # up, down, or nearest
+  precision: 2 # Number of decimal places, between 0 and 5
+
+ignore:
+  - coverage
+  - build
+  - dist
+  - public
+  - src/main.tsx
+
+comment:
+  layout: diff, files
