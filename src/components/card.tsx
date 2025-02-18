@@ -1,43 +1,43 @@
 import "../css/card.css";
 
-export function Card() {
+const Card = () => {
   return (
     <div className="card">
-      <div id="top">
-        <div id="types">
-          <span id="type1" data-testid="type1">
+      <div className="top">
+        <div className="top__types">
+          <span className="top__types__type1" role="type1">
             Type1
           </span>
-          <span id="type2" data-testid="type2">
+          <span className="top__types__type2" role="type2">
             Type2
           </span>
         </div>
 
-        <div id="id" data-testid="id">
-          <p>
-            <strong>#001</strong>
-          </p>
+        <div className="top__id" role="id">
+          <p>#001</p>
         </div>
       </div>
 
-      <div id="name" data-testid="name">
+      <div className="name" role="name">
         <p>Test name</p>
       </div>
 
-      <div id="bottom">
-        <div id="description" data-testid="description">
+      <div className="bottom">
+        <div className="bottom__description" role="description">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit.Perferendis sit officiis nemo
             cumque, dignissimos modi non unde saepe.
           </p>
 
-          <button id="more">Know More...</button>
+          <button className="bottom__more__button">Know More...</button>
         </div>
 
-        <div id="sprite" data-testid="sprite">
+        <div className="bottom__sprite" role="sprite">
           <img src="/assets/pokeball.png" alt="Pokemon" />
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Card;

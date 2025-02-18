@@ -6,75 +6,77 @@
 }
 
 /* Types & ID */
-#top {
+.top {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  text-align: center;
 }
 
-#types {
-  display: flex;
-  text-align: center;
+.top__types {
   font-size: 11px;
   font-weight: 600;
 }
 
-#types span {
+.top__types span {
   margin-right: 10px;
   padding: 5px 15px;
   border-radius: 50px;
 }
 
-#type1 {
+.top__types__type1 {
   background-color: rgba(0, 255, 221, 0.58);
 }
 
-#type2 {
+.top__types__type2 {
   background-color: rgba(72, 8, 131, 0.58);
   color: white;
 }
 
-#id {
+.top__id {
   align-items: end;
   font-size: 22px;
   font-weight: 700;
   margin-right: 30px;
 }
 
-#name {
+.top__id p {
+  font-weight: 700;
+}
+
+.name {
   font-size: 27px;
   font-weight: 700;
 }
 
-#name p {
+.name p {
   margin: 0;
 }
 
 /* Description & Sprite */
-#bottom {
+.bottom {
   display: flex;
+  font-size: 14px;
 }
 
-#description {
-  font-size: 13px;
+.bottom__description {
   max-width: 300px;
   word-wrap: break-word;
   margin-right: 15px;
 }
 
-#more {
+.bottom__more__button {
   margin-top: 20px;
   background-color: rgb(169, 0, 0);
-  font-size: 12px;
+  cursor: pointer;
 }
 
-#sprite {
-  display: flex;
+.bottom__sprite {
   justify-content: end;
   margin: 10px;
 }
 
-#sprite img {
+.bottom__sprite img {
   height: 150px;
   width: 150px;
 }

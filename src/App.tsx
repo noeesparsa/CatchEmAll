@@ -1,13 +1,15 @@
 import "./App.css";
-import { Card } from "./components/card.tsx";
+import Card from "./components/card.tsx";
 
 function App() {
   return (
     <>
       <div id="header">
-        <img src="../public/assets/logoPokedex.png" alt="Logo Pokédex" />
+        <img src="/assets/logoPokedex.png" alt="Logo Pokédex" role="pokedexLogo" />
       </div>
-      <div className="cards"> {Card()} </div>
+      <div className="cards">
+        <Card />
+      </div>
     </>
   );
 }
