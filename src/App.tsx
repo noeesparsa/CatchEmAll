@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <div id="header">
-        <img src="/assets/logoPokedex.png" alt="Logo Pokédex" role="pokedexLogo" />
+        <img src="/assets/logoPokedex.png" alt="Pokedex" />
       </div>
       <div className="cards">
         <Card />

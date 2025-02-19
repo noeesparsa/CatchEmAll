@@ -1,16 +1,16 @@
 import "../card/card.css";
-import TypesPokemon from "./types";
+import PokemonType from "../pokemonTypeBadge/PokemonTypeBadge";
 
 const Card = () => {
   return (
     <div className="card">
-      <div className="top">
-        <div className="top__types">
-          <TypesPokemon type="Type1" />
-          <TypesPokemon type="Type2" />
+      <div className="card__header">
+        <div className="type__badge">
+          <PokemonType type="Type1" />
+          <PokemonType type="Type2" />
         </div>
 
-        <div className="top__id" role="id">
+        <div className="card__header__id" role="id">
           <p>#001</p>
         </div>
       </div>
@@ -19,17 +19,17 @@ const Card = () => {
         <p>Test name</p>
       </div>
 
-      <div className="bottom">
-        <div className="bottom__description" role="description">
+      <div className="card__footer">
+        <div className="card__footer__description" role="description">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sit officiis nemo
             cumque, dignissimos modi non unde saepe.
           </p>
 
-          <button className="bottom__more__button">Know More...</button>
+          <button className="card__footer__button">Know More...</button>
         </div>
 
-        <div className="bottom__sprite">
+        <div className="card__footer__sprite">
           <img src="/assets/pokeball.png" alt="Pokemon" />
         </div>
       </div>

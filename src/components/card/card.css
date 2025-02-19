@@ -6,42 +6,18 @@
 }
 
 /* Types & ID */
-.top {
+.card__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   text-align: center;
 }
 
-.top__types {
-  font-size: 11px;
-  font-weight: 600;
-}
-
-.top__types span {
-  margin-right: 10px;
-  padding: 5px 15px;
-  border-radius: 50px;
-}
-
-.top__types__type1 {
-  background-color: rgba(0, 255, 221, 0.58);
-}
-
-.top__types__type2 {
-  background-color: rgba(72, 8, 131, 0.58);
-  color: white;
-}
-
-.top__id {
+.card__header__id {
   align-items: end;
   font-size: 22px;
   font-weight: 700;
   margin-right: 30px;
-}
-
-.top__id p {
-  font-weight: 700;
 }
 
 .name {
@@ -54,29 +30,29 @@
 }
 
 /* Description & Sprite */
-.bottom {
+.card__footer {
   display: flex;
   font-size: 14px;
 }
 
-.bottom__description {
+.card__footer__description {
   max-width: 300px;
   word-wrap: break-word;
   margin-right: 15px;
 }
 
-.bottom__more__button {
+.card__footer__button {
   margin-top: 20px;
   background-color: rgb(169, 0, 0);
   cursor: pointer;
 }
 
-.bottom__sprite {
+.card__footer__sprite {
   justify-content: end;
   margin: 10px;
 }
 
-.bottom__sprite img {
+.card__footer__sprite img {
   height: 150px;
   width: 150px;
 }

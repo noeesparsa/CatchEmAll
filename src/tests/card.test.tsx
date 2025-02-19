@@ -3,14 +3,13 @@ import { render, screen } from "@testing-library/react";
 import Card from "../components/card/card";
 
 describe("Card", () => {
-  it("should render the component Card and his informations about the Pokemon", () => {
+  it("should render the correctly", () => {
     render(<Card />);
-    expect(screen.getByRole("name")).toBeInTheDocument();
-    expect(screen.getByRole("id")).toBeInTheDocument();
-    expect(screen.getByRole("type1")).toBeInTheDocument();
-    expect(screen.getByRole("type2")).toBeInTheDocument();
-    expect(screen.getByRole("description")).toBeInTheDocument();
-    expect(screen.getByRole("img")).toBeInTheDocument();
-    expect(screen.getByRole("button")).toBeInTheDocument();
+
+    expect(screen.getByRole("name")).toBeVisible();
+    expect(screen.getByRole("id")).toBeVisible();
+    expect(screen.getByRole("description")).toBeVisible();
+    expect(screen.getByRole("img", { name: "Pokemon" })).toBeVisible();
+    expect(screen.getByRole("button")).toBeVisible();
   });
 });
