@@ -1,5 +1,5 @@
 import "./App.css";
-import Card from "./components/card/card.tsx";
+import PokemonCard from "./components/card/PokemonCard.tsx";
 
 function App() {
   return (
@@ -8,7 +8,14 @@ function App() {
         <img src="/assets/logoPokedex.png" alt="Pokedex" />
       </div>
       <div className="cards">
-        <Card />
+        {/* Test avec un pokémon aléatoire pour le moment, ce sera adapté dans l'exo suivant, en lien avec la consigne */}
+        <PokemonCard
+          id={1}
+          name="Pikachu"
+          description="Electric type Pokémon"
+          sprite="/assets/pikachu.png"
+          types={["Electric"]}
+        />
       </div>
     </>
   );

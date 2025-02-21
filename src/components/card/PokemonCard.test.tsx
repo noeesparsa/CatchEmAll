@@ -1,15 +1,23 @@
 import { render, screen } from "@testing-library/react";
 
-import Card from "../components/card/card";
+import PokemonCard from "./PokemonCard";
 
 describe("Card", () => {
   it("should render the correctly", () => {
-    render(<Card />);
+    render(
+      <PokemonCard
+        name="PokemonName"
+        id={666}
+        description="PokemonDescription  Pokemon"
+        sprite="test.png"
+        types={["Ghost"]}
+      />,
+    );
 
     expect(screen.getByRole("name")).toBeVisible();
     expect(screen.getByRole("id")).toBeVisible();
     expect(screen.getByRole("description")).toBeVisible();
-    expect(screen.getByRole("img", { name: "Pokemon" })).toBeVisible();
+    expect(screen.getByRole("img")).toBeInTheDocument();
     expect(screen.getByRole("button")).toBeVisible();
   });
 });

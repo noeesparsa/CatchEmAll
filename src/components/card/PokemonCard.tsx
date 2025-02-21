@@ -1,40 +1,47 @@
-import "../card/card.css";
+import { FC } from "react";
+
+import "../card/PokemonCard.css";
 import PokemonType from "../pokemonTypeBadge/PokemonTypeBadge";
 
-const Card = () => {
+type PokemonCardProps = {
+  name: string;
+  id: number;
+  description: string;
+  sprite: string;
+  types: string[];
+};
+
+const PokemonCard: FC<Readonly<PokemonCardProps>> = ({ name, id, description, sprite, types }) => {
   return (
     <div className="card">
       <div className="card__header">
         <div className="type__badge">
-          <PokemonType type="Type1" />
-          <PokemonType type="Type2" />
+          {types.map((type) => (
+            <PokemonType key={type} type={type} />
+          ))}
         </div>
 
         <div className="card__header__id" role="id">
-          <p>#001</p>
+          <p>#{id} </p>
         </div>
       </div>
 
       <div className="name" role="name">
-        <p>Test name</p>
+        <p>{name}</p>
       </div>
 
       <div className="card__footer">
         <div className="card__footer__description" role="description">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sit officiis nemo
-            cumque, dignissimos modi non unde saepe.
-          </p>
-
+          <p> {description} </p>
           <button className="card__footer__button">Know More...</button>
         </div>
 
         <div className="card__footer__sprite">
-          <img src="/assets/pokeball.png" alt="Pokemon" />
+          <img src={sprite} alt={name} />
         </div>
       </div>
     </div>
   );
 };
 
-export default Card;
+export default PokemonCard;
