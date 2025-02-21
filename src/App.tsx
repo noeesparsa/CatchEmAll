@@ -1,33 +1,22 @@
 import "./App.css";
-import { useState } from "react";
+import PokemonCard from "./components/card/PokemonCard.tsx";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank" rel="noreferrer">
-          <img src={"vite.svg"} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={"react.svg"} className="logo react" alt="React logo" />
-        </a>
+      <div id="header">
+        <img src="/assets/logoPokedex.png" alt="Pokedex" />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button
-          onClick={() => {
-            setCount((count) => count + 1);
-          }}
-        >
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      <div className="cards">
+        {/* Test avec un pokémon aléatoire pour le moment, ce sera adapté dans l'exo suivant, en lien avec la consigne */}
+        <PokemonCard
+          id={1}
+          name="Pikachu"
+          description="Electric type Pokémon"
+          imageURL="/assets/pikachu.png"
+          types={["Electric"]}
+        />
       </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
     </>
   );
 }

@@ -1,0 +1,61 @@
+.card {
+  background-color: rgb(255, 255, 255);
+  border-radius: 20px;
+  color: black;
+  padding-left: 20px;
+  margin-bottom: 30px;
+}
+
+/* Types & ID */
+.card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.card__header__id {
+  align-items: end;
+  font-size: 22px;
+  font-weight: 700;
+  margin-right: 30px;
+}
+
+.name {
+  font-size: 27px;
+  font-weight: 700;
+}
+
+.name p {
+  margin: 0;
+}
+
+/* Description & Sprite */
+.card__footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.card__footer__description {
+  max-width: 300px;
+  word-wrap: break-word;
+  margin-right: 15px;
+}
+
+.card__footer__button {
+  margin-top: 20px;
+  background-color: rgb(169, 0, 0);
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.card__footer__sprite {
+  justify-content: end;
+  margin: 10px;
+}
+
+.card__footer__sprite img {
+  height: 150px;
+  width: 150px;
+}
