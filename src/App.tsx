@@ -13,7 +13,7 @@ function App() {
           id={1}
           name="Pikachu"
           description="Electric type Pokémon"
-          sprite="/assets/pikachu.png"
+          imageURL="/assets/pikachu.png"
           types={["Electric"]}
         />
       </div>

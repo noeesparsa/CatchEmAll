@@ -1,17 +1,23 @@
 import { FC } from "react";
 
-import "../card/PokemonCard.css";
+import "./PokemonCard.css";
 import PokemonType from "../pokemonTypeBadge/PokemonTypeBadge";
 
 type PokemonCardProps = {
   name: string;
   id: number;
   description: string;
-  sprite: string;
+  imageURL: string;
   types: string[];
 };
 
-const PokemonCard: FC<Readonly<PokemonCardProps>> = ({ name, id, description, sprite, types }) => {
+const PokemonCard: FC<Readonly<PokemonCardProps>> = ({
+  name,
+  id,
+  description,
+  imageURL,
+  types,
+}) => {
   return (
     <div className="card">
       <div className="card__header">
@@ -21,23 +27,23 @@ const PokemonCard: FC<Readonly<PokemonCardProps>> = ({ name, id, description, sp
           ))}
         </div>
 
-        <div className="card__header__id" role="id">
+        <div className="card__header__id">
           <p>#{id} </p>
         </div>
       </div>
 
-      <div className="name" role="name">
+      <div className="name">
         <p>{name}</p>
       </div>
 
       <div className="card__footer">
-        <div className="card__footer__description" role="description">
+        <div className="card__footer__description">
           <p> {description} </p>
           <button className="card__footer__button">Know More...</button>
         </div>
 
         <div className="card__footer__sprite">
-          <img src={sprite} alt={name} />
+          <img src={imageURL} alt={name} />
         </div>
       </div>
     </div>

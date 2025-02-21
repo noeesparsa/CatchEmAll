@@ -33,6 +33,7 @@
 /* Description & Sprite */
 .card__footer {
   display: flex;
+  justify-content: space-between;
   font-size: 14px;
 }
 

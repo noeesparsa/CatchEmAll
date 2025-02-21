@@ -8,16 +8,16 @@ describe("Card", () => {
       <PokemonCard
         name="PokemonName"
         id={666}
-        description="PokemonDescription  Pokemon"
-        sprite="test.png"
+        description="PokemonDescriptionPokemon"
+        imageURL="test.png"
         types={["Ghost"]}
       />,
     );
 
-    expect(screen.getByRole("name")).toBeVisible();
-    expect(screen.getByRole("id")).toBeVisible();
-    expect(screen.getByRole("description")).toBeVisible();
-    expect(screen.getByRole("img")).toBeInTheDocument();
-    expect(screen.getByRole("button")).toBeVisible();
+    expect(screen.getByText("PokemonName")).toBeVisible();
+    expect(screen.getByText("#666")).toBeVisible();
+    expect(screen.getByText("PokemonDescriptionPokemon")).toBeVisible();
+    expect(screen.getByRole("img")).toHaveAttribute("src", "test.png");
+    expect(screen.getByRole("button", { name: "Know More..." })).toBeVisible();
   });
 });
