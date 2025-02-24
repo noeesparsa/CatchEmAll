@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Square";
+  src: url("/public/fonts/Square.ttf") format("truetype");
+}
+
 .type__badge {
   font-size: 11px;
   font-weight: 600;
@@ -8,6 +13,7 @@
   padding: 5px 15px;
   border-radius: 50px;
   color: white;
+  font-family: "Square", sans-serif;
 }
 
 .type__badge__bug {
