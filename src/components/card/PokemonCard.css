@@ -1,3 +1,9 @@
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
 .card {
   background-color: rgb(255, 255, 255);
   border-radius: 20px;
@@ -58,4 +64,44 @@
 .card__footer__sprite img {
   height: 150px;
   width: 150px;
+}
+
+@media (max-width: 600px) {
+  #root {
+    padding: 10px;
+  }
+
+  #header img {
+    width: 80%;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .card {
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+
+  .card__header {
+    height: auto;
+    padding: 2px 5px;
+    margin: 0;
+  }
+
+  .card__header__id {
+    font-size: 16px;
+    margin-right: 5px;
+  }
+
+  .name {
+    font-size: 18px;
+  }
+
+  .card__footer__sprite img {
+    height: 100px;
+    width: 100px;
+  }
 }
