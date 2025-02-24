@@ -62,8 +62,8 @@
 }
 
 .card__footer__sprite img {
-  height: 150px;
-  width: 150px;
+  height: 200px;
+  width: 200px;
 }
 
 @media (max-width: 600px) {
@@ -101,7 +101,7 @@
   }
 
   .card__footer__sprite img {
-    height: 100px;
-    width: 100px;
+    height: 150px;
+    width: 150px;
   }
 }
