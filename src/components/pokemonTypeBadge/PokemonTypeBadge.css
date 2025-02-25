@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Square";
-  src: url("/public/fonts/Square.ttf") format("truetype");
+  src: url("./fonts/Square.ttf") format("truetype");
 }
 
 .type__badge {

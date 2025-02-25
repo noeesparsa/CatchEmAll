@@ -1,10 +1,8 @@
-// Pour la liste elle même des Pokemon
 export type PokemonLight = {
   name: string;
   url: string;
 };
 
-// Pour la pagination des Pokemon
 export type PaginatedResult<T> = {
   count: number;
   next: string;
@@ -12,7 +10,6 @@ export type PaginatedResult<T> = {
   results: T[];
 };
 
-// Récupérer les infos des pokémon
 export type PokemonDetail = {
   id: number;
   name: string;

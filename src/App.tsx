@@ -10,9 +10,8 @@ function App() {
 
   useEffect(() => {
     const loadPokemonData = async () => {
-      const pokemonLightList: PokemonLight[] = await fetchPokemonList(); // Liste avec tout les Pokémon
+      const pokemonLightList: PokemonLight[] = await fetchPokemonList();
 
-      // pokemonDetailedList va attendre que toutes les promesses (map la liste des pokémon pour récupérer chaque url) soient résolues
       const pokemonDetailedList = await Promise.all(
         pokemonLightList.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
       );
@@ -22,22 +21,30 @@ function App() {
     loadPokemonData();
   }, []);
 
+  const getPokemonType = (pokemon: PokemonDetail) => {
+    return {
+      types: pokemon.types.map((typeInfo) => typeInfo.type.name),
+    };
+  };
+
   return (
     <>
       <div id="header">
         <img src="/assets/logoPokedex.png" alt="Pokedex" />
       </div>
       <div className="cards">
-        {/* pokemonList récup les infos de pokemonDetailedList via le setPokemonList */}
-        {pokemonList.map((pokemon) => (
-          <PokemonCard
-            key={pokemon.id}
-            id={pokemon.id}
-            name={pokemon.name}
-            imageURL={pokemon.sprites.front_default}
-            types={pokemon.types.map((typeInfo) => typeInfo.type.name)}
-          />
-        ))}
+        {pokemonList.map((pokemon) => {
+          const pokemonData = getPokemonType(pokemon);
+          return (
+            <PokemonCard
+              key={pokemon.id}
+              id={pokemon.id}
+              name={pokemon.name}
+              imageURL={pokemon.sprites.front_default}
+              types={pokemonData.types}
+            />
+          );
+        })}
       </div>
     </>
   );
