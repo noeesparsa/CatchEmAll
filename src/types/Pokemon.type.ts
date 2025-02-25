@@ -16,7 +16,6 @@ export type PaginatedResult<T> = {
 export type PokemonDetail = {
   id: number;
   name: string;
-  description?: string;
   sprites: {
     front_default: string;
   };

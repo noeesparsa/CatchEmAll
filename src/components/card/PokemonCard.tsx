@@ -6,18 +6,11 @@ import PokemonType from "../pokemonTypeBadge/PokemonTypeBadge";
 type PokemonCardProps = {
   name: string;
   id: number;
-  description: string;
   imageURL: string;
   types: string[];
 };
 
-const PokemonCard: FC<Readonly<PokemonCardProps>> = ({
-  name,
-  id,
-  description,
-  imageURL,
-  types,
-}) => {
+const PokemonCard: FC<Readonly<PokemonCardProps>> = ({ name, id, imageURL, types }) => {
   return (
     <div className="card">
       <div className="card__header">
@@ -32,13 +25,9 @@ const PokemonCard: FC<Readonly<PokemonCardProps>> = ({
         </div>
       </div>
 
-      <div className="name">
-        <p>{name}</p>
-      </div>
-
       <div className="card__footer">
-        <div className="card__footer__description">
-          <p> {description} </p>
+        <div className="card__footer__name">
+          <p>{name}</p>
           <button className="card__footer__button">Know More...</button>
         </div>
 

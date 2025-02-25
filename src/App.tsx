@@ -34,7 +34,6 @@ function App() {
             key={pokemon.id}
             id={pokemon.id}
             name={pokemon.name}
-            description={pokemon.description || "No description available"}
             imageURL={pokemon.sprites.front_default}
             types={pokemon.types.map((typeInfo) => typeInfo.type.name)}
           />

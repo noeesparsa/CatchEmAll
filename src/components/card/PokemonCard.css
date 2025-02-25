@@ -27,15 +27,6 @@
   margin-right: 30px;
 }
 
-.name {
-  font-size: 27px;
-  font-weight: 700;
-}
-
-.name p {
-  margin: 0;
-}
-
 /* Description & Sprite */
 .card__footer {
   display: flex;
@@ -43,10 +34,17 @@
   font-size: 14px;
 }
 
-.card__footer__description {
+.card__footer__name {
   max-width: 300px;
   word-wrap: break-word;
   margin-right: 15px;
+  font-size: 27px;
+  font-weight: 700;
+}
+
+.card__footer__name p {
+  margin-top: 0;
+  margin-bottom: 75px;
 }
 
 .card__footer__button {
@@ -62,8 +60,8 @@
 }
 
 .card__footer__sprite img {
-  height: 200px;
-  width: 200px;
+  height: 225px;
+  width: 225px;
 }
 
 @media (max-width: 600px) {
