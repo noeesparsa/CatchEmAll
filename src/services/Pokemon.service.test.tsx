@@ -13,9 +13,11 @@ describe("fetchPokemonList", () => {
       results: [{ name: "bulbasaur", url: "https://pokeapi.co/api/v2/pokemon/1/" }],
     };
 
-    const fetchSpy = vi.spyOn(window, "fetch").mockResolvedValue({
+    const mockFetchResponse = {
       json: vi.fn().mockResolvedValue(mockResponse),
-    } as unknown as Response);
+    } as Partial<Response>;
+
+    const fetchSpy = vi.spyOn(window, "fetch").mockResolvedValue(mockFetchResponse as Response);
 
     const result = await fetchPokemonList();
     expect(result).toEqual(mockResponse.results);
