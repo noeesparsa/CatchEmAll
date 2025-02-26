@@ -7,7 +7,7 @@ export type PokemonTypeBadgeProps = {
 };
 
 const PokemonTypeBadge: FC<Readonly<PokemonTypeBadgeProps>> = ({ type }) => {
-  return <span className={`type__badge__${type.toLowerCase()}`}>{type}</span>;
+  return <span className={`type__badge__${type.toLowerCase()}`}>{type.toUpperCase()}</span>;
 };
 
 export default PokemonTypeBadge;

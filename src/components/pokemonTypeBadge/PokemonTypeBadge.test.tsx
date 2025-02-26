@@ -4,8 +4,8 @@ import PokemonTypeBadge from "./PokemonTypeBadge";
 
 describe("PokemonTypeBadge", () => {
   it("should render correctly", () => {
-    const { container } = render(<PokemonTypeBadge type="type1" />);
+    const { container } = render(<PokemonTypeBadge type="TYPE1" />);
     expect(container.firstChild).toHaveClass("type__badge__type1");
-    expect(screen.getByText("type1")).toBeVisible();
+    expect(screen.getByText("TYPE1")).toBeVisible();
   });
 });

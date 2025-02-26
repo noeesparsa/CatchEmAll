@@ -1,3 +1,9 @@
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
 .card {
   background-color: rgb(255, 255, 255);
   border-radius: 20px;
@@ -21,15 +27,6 @@
   margin-right: 30px;
 }
 
-.name {
-  font-size: 27px;
-  font-weight: 700;
-}
-
-.name p {
-  margin: 0;
-}
-
 /* Description & Sprite */
 .card__footer {
   display: flex;
@@ -37,10 +34,17 @@
   font-size: 14px;
 }
 
-.card__footer__description {
+.card__footer__name {
   max-width: 300px;
   word-wrap: break-word;
   margin-right: 15px;
+  font-size: 27px;
+  font-weight: 700;
+}
+
+.card__footer__name p {
+  margin-top: 0;
+  margin-bottom: 75px;
 }
 
 .card__footer__button {
@@ -56,6 +60,46 @@
 }
 
 .card__footer__sprite img {
-  height: 150px;
-  width: 150px;
+  height: 225px;
+  width: 225px;
+}
+
+@media (max-width: 600px) {
+  #root {
+    padding: 10px;
+  }
+
+  #header img {
+    width: 80%;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .card {
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+
+  .card__header {
+    height: auto;
+    padding: 2px 5px;
+    margin: 0;
+  }
+
+  .card__header__id {
+    font-size: 16px;
+    margin-right: 5px;
+  }
+
+  .name {
+    font-size: 18px;
+  }
+
+  .card__footer__sprite img {
+    height: 150px;
+    width: 150px;
+  }
 }
