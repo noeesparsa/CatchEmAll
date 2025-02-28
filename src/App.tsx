@@ -7,19 +7,32 @@ import { PokemonDetail, PokemonLight } from "./types/Pokemon.type.ts";
 
 function App() {
   const [pokemonList, setPokemonList] = useState<PokemonDetail[]>([]);
+  const [nextUrl, setNextUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const loadPokemonData = async () => {
-      const pokemonLightList: PokemonLight[] = await fetchPokemonList();
-
+      const { results, next } = await fetchPokemonList();
       const pokemonDetailedList = await Promise.all(
-        pokemonLightList.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
+        results.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
       );
       setPokemonList(pokemonDetailedList);
+      setNextUrl(next);
     };
 
     loadPokemonData();
   }, []);
+
+  const loadMorePokemon = async () => {
+    if (nextUrl) {
+      const response = await fetch(nextUrl);
+      const data: { results: PokemonLight[]; next: string | null } = await response.json();
+      const pokemonDetailedList = await Promise.all(
+        data.results.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
+      );
+      setPokemonList((prevList) => [...prevList, ...pokemonDetailedList]);
+      setNextUrl(data.next);
+    }
+  };
 
   const getPokemonType = (pokemon: PokemonDetail) => {
     return {
@@ -45,6 +58,9 @@ function App() {
             />
           );
         })}
+      </div>
+      <div className="load__more__button">
+        {nextUrl && <button onClick={loadMorePokemon}>Load More...</button>}
       </div>
     </>
   );
