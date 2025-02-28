@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Square";
+  src: url("./fonts/Square.ttf") format("truetype");
+}
+
 .cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -13,6 +18,7 @@
   border-radius: 20px;
   box-shadow: 10px 10px 10px rgba(68, 66, 66, 0.5);
   border: 2px solid black;
+  cursor: pointer;
 }
 
 .card__header {
@@ -29,7 +35,6 @@
 }
 
 .card__footer__sprite {
-  justify-content: end;
   margin: 10px;
 }
 
@@ -66,15 +71,16 @@
 .card__footer__button button {
   background-color: #a90000;
   cursor: pointer;
+  font-family: "Square", sans-serif;
 }
 
 @media (max-width: 600px) {
   #root {
-    padding: 10px;
+    padding: 70px;
   }
 
   #header img {
-    width: 80%;
+    width: 70%;
   }
 
   .cards {
@@ -94,16 +100,21 @@
   }
 
   .card__header__id {
-    font-size: 16px;
+    font-size: 20px;
     margin-right: 5px;
   }
 
-  .name {
-    font-size: 18px;
+  .card__footer__sprite {
+    display: flex;
+    justify-content: center;
   }
 
   .card__footer__sprite img {
     height: 150px;
     width: 150px;
+  }
+
+  .card__footer__button {
+    margin-bottom: 5px;
   }
 }

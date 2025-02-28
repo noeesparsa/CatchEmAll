@@ -11,6 +11,7 @@
 .type__badge span {
   padding: 5px 15px;
   border-radius: 50px;
+  margin-left: 2px;
   color: white;
   font-family: "Square", sans-serif;
 }
