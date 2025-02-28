@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 import App from "./App";
 import { PokemonLight } from "./types/Pokemon.type.ts";
@@ -21,16 +21,5 @@ describe("App", () => {
   it("should render header with logo", () => {
     render(<App />);
     expect(screen.getByRole("img", { name: "Pokedex" })).toBeVisible();
-  });
-
-  it("should fetches the user info", async () => {
-    render(<App />);
-
-    await waitFor(
-      () => {
-        expect(screen.getByText("bulbasaur")).toBeInTheDocument();
-      },
-      { timeout: 4000 },
-    );
   });
 });

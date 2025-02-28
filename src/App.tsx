@@ -11,12 +11,18 @@ function App() {
 
   useEffect(() => {
     const loadPokemonData = async () => {
-      const { results, next } = await fetchPokemonList();
-      const pokemonDetailedList = await Promise.all(
-        results.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
-      );
-      setPokemonList(pokemonDetailedList);
-      setNextUrl(next);
+      try {
+        const { results, next } = await fetchPokemonList();
+        if (results) {
+          const pokemonDetailedList = await Promise.all(
+            results.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
+          );
+          setPokemonList(pokemonDetailedList);
+          setNextUrl(next);
+        }
+      } catch (error) {
+        console.error("Failed to load Pokémon data", error);
+      }
     };
 
     loadPokemonData();
@@ -24,13 +30,19 @@ function App() {
 
   const loadMorePokemon = async () => {
     if (nextUrl) {
-      const response = await fetch(nextUrl);
-      const data: { results: PokemonLight[]; next: string | null } = await response.json();
-      const pokemonDetailedList = await Promise.all(
-        data.results.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
-      );
-      setPokemonList((prevList) => [...prevList, ...pokemonDetailedList]);
-      setNextUrl(data.next);
+      try {
+        const response = await fetch(nextUrl);
+        const data: { results: PokemonLight[]; next: string | null } = await response.json();
+        if (data.results) {
+          const pokemonDetailedList = await Promise.all(
+            data.results.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
+          );
+          setPokemonList((prevList) => [...prevList, ...pokemonDetailedList]);
+          setNextUrl(data.next);
+        }
+      } catch (error) {
+        console.error("Failed to load more Pokémon data", error);
+      }
     }
   };
 
