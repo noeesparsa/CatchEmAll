@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { vi } from "vitest";
 
 import App from "./App";
 import { PokemonLight } from "./types/Pokemon.type.ts";
@@ -21,5 +22,24 @@ describe("App", () => {
   it("should render header with logo", () => {
     render(<App />);
     expect(screen.getByRole("img", { name: "Pokedex" })).toBeVisible();
+  });
+
+  it("should render 'Load More...' button", () => {
+    const nextUrl = "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20";
+    const loadMorePokemon = vi.fn();
+
+    render(
+      <div>
+        <div id="header">
+          <img alt="Pokedex" src="/assets/logoPokedex.png" />
+        </div>
+        <div className="cards" />
+        <div className="load__more__button">
+          {nextUrl && <button onClick={loadMorePokemon}>Load More...</button>}
+        </div>
+      </div>,
+    );
+
+    expect(screen.getByRole("button", { name: "Load More..." })).toBeInTheDocument();
   });
 });
