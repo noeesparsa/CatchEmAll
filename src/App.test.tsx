@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { vi } from "vitest";
 
 import App from "./App";
@@ -24,7 +24,7 @@ describe("App", () => {
     expect(screen.getByRole("img", { name: "Pokedex" })).toBeVisible();
   });
 
-  it("should render 'Load More...' button", () => {
+  it("should render 'Load More...' button and do the API call when we click on it", () => {
     const nextUrl = "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20";
     const loadMorePokemon = vi.fn();
 
@@ -40,6 +40,10 @@ describe("App", () => {
       </div>,
     );
 
-    expect(screen.getByRole("button", { name: "Load More..." })).toBeInTheDocument();
+    const button = screen.getByRole("button", { name: "Load More..." });
+    expect(button).toBeInTheDocument();
+
+    fireEvent.click(button);
+    expect(loadMorePokemon).toHaveBeenCalled();
   });
 });
