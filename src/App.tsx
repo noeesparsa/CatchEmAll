@@ -13,15 +13,11 @@ function App() {
     const loadPokemonData = async () => {
       try {
         const { results, next } = await fetchPokemonList();
-        if (results) {
-          const pokemonDetailedList = await Promise.all(
-            results.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
-          );
-          setPokemonList(pokemonDetailedList);
-          setNextUrl(next);
-        } else {
-          console.error("Results is not found");
-        }
+        const pokemonDetailedList = await Promise.all(
+          results.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
+        );
+        setPokemonList(pokemonDetailedList);
+        setNextUrl(next);
       } catch (error) {
         console.error("Failed to load Pokémon data", error);
       }
@@ -31,22 +27,24 @@ function App() {
   }, []);
 
   const loadMorePokemon = async () => {
-    if (nextUrl) {
-      try {
-        const response = await fetch(nextUrl);
-        const data: { results: PokemonLight[]; next: string | null } = await response.json();
-        if (data.results) {
-          const pokemonDetailedList = await Promise.all(
-            data.results.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
-          );
-          setPokemonList((prevList) => [...prevList, ...pokemonDetailedList]);
-          setNextUrl(data.next);
-        } else {
-          console.error("Next URL is not found");
-        }
-      } catch (error) {
-        console.error("Failed to load more Pokémon data", error);
+    try {
+      if (!nextUrl) {
+        console.error("Next URL is null");
+        return;
       }
+      const response = await fetch(nextUrl);
+      const data: { results: PokemonLight[]; next: string | null } = await response.json();
+      if (data.results) {
+        const pokemonDetailedList = await Promise.all(
+          data.results.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
+        );
+        setPokemonList((prevList) => [...prevList, ...pokemonDetailedList]);
+        setNextUrl(data.next);
+      } else {
+        console.error("Next URL is not found");
+      }
+    } catch (error) {
+      console.error("Failed to load more Pokémon data", error);
     }
   };
 
