@@ -19,6 +19,8 @@ function App() {
           );
           setPokemonList(pokemonDetailedList);
           setNextUrl(next);
+        } else {
+          console.error("Results is not found");
         }
       } catch (error) {
         console.error("Failed to load Pokémon data", error);
@@ -39,6 +41,8 @@ function App() {
           );
           setPokemonList((prevList) => [...prevList, ...pokemonDetailedList]);
           setNextUrl(data.next);
+        } else {
+          console.error("Next URL is not found");
         }
       } catch (error) {
         console.error("Failed to load more Pokémon data", error);
