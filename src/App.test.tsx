@@ -37,16 +37,16 @@ describe("App", () => {
     expect(button).toBeVisible();
   });
 
-  // it("should render a few Pokemon", async () => {
-  //   vi.spyOn(pokemonService, "fetchPokemonDetail").mockResolvedValue(mockedPokemonDetail);
+  it("should render a few Pokemon", async () => {
+    vi.spyOn(pokemonService, "fetchPokemonDetail").mockResolvedValue(mockedPokemonDetail);
 
-  //   render(<App />);
+    render(<App />);
 
-  //   for (const pokemon of mockedPokemonList) {
-  //     const pokemonName = await screen.findByText(pokemon.name);
-  //     expect(pokemonName).toBeVisible();
-  //   }
-  // });
+    for (const pokemon of mockedPokemonList) {
+      const pokemonName = await screen.findByText(pokemon.name);
+      expect(pokemonName).toBeVisible();
+    }
+  });
 
   describe("When the user click on 'Load More...' button", () => {
     it("should render the 20 next Pokemon", async () => {
