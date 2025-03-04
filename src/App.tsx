@@ -29,19 +29,20 @@ function App() {
   const loadMorePokemon = async () => {
     try {
       if (!nextUrl) {
-        console.error("Next URL is null");
+        console.error("Next URL is null or not found");
         return;
-      }
-      const response = await fetch(nextUrl);
-      const data: { results: PokemonLight[]; next: string | null } = await response.json();
-      if (data.results) {
-        const pokemonDetailedList = await Promise.all(
-          data.results.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
-        );
-        setPokemonList((prevList) => [...prevList, ...pokemonDetailedList]);
-        setNextUrl(data.next);
       } else {
-        console.error("Next URL is not found");
+        const response = await fetch(nextUrl);
+        const data: { results: PokemonLight[]; next: string | null } = await response.json();
+        if (data.results) {
+          const pokemonDetailedList = await Promise.all(
+            data.results.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
+          );
+          setPokemonList((prevList) => [...prevList, ...pokemonDetailedList]);
+          setNextUrl(data.next);
+        } else {
+          console.error("Next URL is not found");
+        }
       }
     } catch (error) {
       console.error("Failed to load more Pokémon data", error);
