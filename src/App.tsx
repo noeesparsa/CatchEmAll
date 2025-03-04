@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import PokemonCard from "./components/card/PokemonCard.tsx";
 import { fetchPokemonList, fetchPokemonDetail } from "./services/Pokemon.service.ts";
-import { PokemonDetail, PokemonLight } from "./types/Pokemon.type.ts";
+import { PokemonDetail } from "./types/Pokemon.type.ts";
 
 function App() {
   const [pokemonList, setPokemonList] = useState<PokemonDetail[]>([]);
@@ -33,14 +33,13 @@ function App() {
         return;
       }
 
-      const response = await fetch(nextUrl);
-      const data: { results: PokemonLight[]; next: string | null } = await response.json();
+      const { results, next } = await fetchPokemonList(nextUrl);
       const pokemonDetailedList = await Promise.all(
-        data.results.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
+        results.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
       );
 
       setPokemonList((prevList) => [...prevList, ...pokemonDetailedList]);
-      setNextUrl(data.next);
+      setNextUrl(next);
     } catch (error) {
       console.error("Failed to load more Pokémon data", error);
     }
