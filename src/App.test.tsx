@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { vi } from "vitest";
 
 import App from "./App";
@@ -48,30 +48,18 @@ describe("App", () => {
   //   }
   // });
 
-  // describe("When the user click on 'Load More...' button", () => {
-  //   it("should render the 20 next Pokemon", async () => {
-  //     vi.spyOn(pokemonService, "fetchPokemonList").mockResolvedValue({
-  //       results: mockedPokemonList,
-  //       next: "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20",
-  //     });
+  describe("When the user click on 'Load More...' button", () => {
+    it("should render the 20 next Pokemon", async () => {
+      const loadMorePokemon = vi.spyOn(pokemonService, "fetchPokemonList").mockResolvedValue({
+        results: mockedPokemonList,
+        next: "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20",
+      });
 
-  //     render(<App />);
+      render(<App />);
 
-  //     const button = await screen.findByRole("button", { name: "Load More..." });
-  //     expect(button).toBeVisible();
-  //   });
-  // });
-
-  // it("should render 'Load More...' button and do the API call when we click on it", () => {
-  //   render(<App />);
-
-  //   const nextUrl = "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20";
-  //   const loadMorePokemon = vi.fn();
-
-  //   const button = screen.getByRole("button", { name: "Load More..." });
-  //   expect(button).toBeInTheDocument();
-
-  //   fireEvent.click(button);
-  //   expect(loadMorePokemon).toHaveBeenCalled();
-  // });
+      const button = await screen.findByRole("button", { name: "Load More..." });
+      fireEvent.click(button);
+      expect(loadMorePokemon).toHaveBeenCalled();
+    });
+  });
 });
