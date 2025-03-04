@@ -34,26 +34,13 @@ function App() {
       }
 
       const response = await fetch(nextUrl);
-      if (!response.ok) {
-        throw new Error(`Response is not ok ! status: ${response.status}`);
-      }
-
       const data: { results: PokemonLight[]; next: string | null } = await response.json();
-      if (!data.results) {
-        console.error("No results found in the response");
-        return;
-      }
+      const pokemonDetailedList = await Promise.all(
+        data.results.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
+      );
 
-      if (!data.results) {
-        console.error("data.results is empty, the pokemon list is not found");
-      } else {
-        const pokemonDetailedList = await Promise.all(
-          data.results.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
-        );
-
-        setPokemonList((prevList) => [...prevList, ...pokemonDetailedList]);
-        setNextUrl(data.next);
-      }
+      setPokemonList((prevList) => [...prevList, ...pokemonDetailedList]);
+      setNextUrl(data.next);
     } catch (error) {
       console.error("Failed to load more Pokémon data", error);
     }
