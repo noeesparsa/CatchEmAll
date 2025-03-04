@@ -31,18 +31,28 @@ function App() {
       if (!nextUrl) {
         console.error("Next URL is null or not found");
         return;
+      }
+
+      const response = await fetch(nextUrl);
+      if (!response.ok) {
+        throw new Error(`Response is not ok ! status: ${response.status}`);
+      }
+
+      const data: { results: PokemonLight[]; next: string | null } = await response.json();
+      if (!data.results) {
+        console.error("No results found in the response");
+        return;
+      }
+
+      if (!data.results) {
+        console.error("data.results is empty, the pokemon list is not found");
       } else {
-        const response = await fetch(nextUrl);
-        const data: { results: PokemonLight[]; next: string | null } = await response.json();
-        if (data.results) {
-          const pokemonDetailedList = await Promise.all(
-            data.results.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
-          );
-          setPokemonList((prevList) => [...prevList, ...pokemonDetailedList]);
-          setNextUrl(data.next);
-        } else {
-          console.error("Next URL is not found");
-        }
+        const pokemonDetailedList = await Promise.all(
+          data.results.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
+        );
+
+        setPokemonList((prevList) => [...prevList, ...pokemonDetailedList]);
+        setNextUrl(data.next);
       }
     } catch (error) {
       console.error("Failed to load more Pokémon data", error);
