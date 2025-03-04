@@ -48,8 +48,8 @@ describe("App", () => {
     }
   });
 
-  describe("When the user click on 'Load More...' button", () => {
-    it("should render the 20 next Pokemon", async () => {
+  describe("When the user clicks on 'Load More...' button", () => {
+    it("should render the 20 next Pokemon and call loadMorePokemon", async () => {
       const loadMorePokemon = vi.spyOn(pokemonService, "fetchPokemonList").mockResolvedValue({
         results: mockedPokemonList,
         next: "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20",
@@ -57,9 +57,19 @@ describe("App", () => {
 
       render(<App />);
 
+      for (const pokemon of mockedPokemonList) {
+        const pokemonName = await screen.findByText(pokemon.name);
+        expect(pokemonName).toBeVisible();
+      }
+
       const button = await screen.findByRole("button", { name: "Load More..." });
       fireEvent.click(button);
       expect(loadMorePokemon).toHaveBeenCalled();
+
+      for (const pokemon of [...mockedPokemonList, ...mockedPokemonList]) {
+        const pokemonName = await screen.findByText(pokemon.name);
+        expect(pokemonName).toBeVisible();
+      }
     });
   });
 });
