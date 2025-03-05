@@ -10,7 +10,7 @@ function App() {
   const [nextUrl, setNextUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadPokemonData = async () => {
+    const loadPokemonData = async (): Promise<void> => {
       try {
         const { results, next } = await fetchPokemonList();
         const pokemonDetailedList = await Promise.all(
@@ -23,10 +23,12 @@ function App() {
       }
     };
 
-    loadPokemonData();
+    loadPokemonData().catch((error) => {
+      console.error("Error in useEffect", error);
+    });
   }, []);
 
-  const loadMorePokemon = async () => {
+  const loadMorePokemon = async (): Promise<void> => {
     try {
       if (nextUrl) {
         const { results, next } = await fetchPokemonList(nextUrl);
@@ -41,10 +43,8 @@ function App() {
     }
   };
 
-  const getPokemonType = (pokemon: PokemonDetail) => {
-    return {
-      types: pokemon.types.map((typeInfo) => typeInfo.type.name),
-    };
+  const getPokemonTypes = (pokemon: PokemonDetail) => {
+    return pokemon.types.map((typeInfo) => typeInfo.type.name);
   };
 
   return (
@@ -54,14 +54,13 @@ function App() {
       </div>
       <div className="cards">
         {pokemonList.map((pokemon) => {
-          const pokemonData = getPokemonType(pokemon);
           return (
             <PokemonCard
               key={pokemon.id}
               id={pokemon.id}
               name={pokemon.name}
               imageURL={pokemon.sprites.front_default}
-              types={pokemonData.types}
+              types={getPokemonTypes(pokemon)}
             />
           );
         })}
