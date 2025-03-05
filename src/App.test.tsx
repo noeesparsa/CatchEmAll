@@ -91,8 +91,6 @@ describe("App", () => {
       expect(loadMorePokemon).toHaveBeenCalledTimes(2);
       expect(loadMorePokemonDetails).toHaveBeenCalledTimes(2);
 
-      console.log(expectedPokemonList);
-
       for (const pokemon of expectedPokemonList) {
         const pokemonName = await screen.getByText(pokemon.name);
         expect(pokemonName).toBeVisible();
