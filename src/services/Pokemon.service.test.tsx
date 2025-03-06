@@ -19,8 +19,8 @@ describe("fetchPokemonList", () => {
 
     const fetchSpy = vi.spyOn(window, "fetch").mockResolvedValue(mockFetchResponse as Response);
 
-    const result = await fetchPokemonList();
-    expect(result).toEqual(mockResponse.results);
+    const response = await fetchPokemonList();
+    expect(response.results).toEqual(mockResponse.results);
 
     fetchSpy.mockRestore();
   });

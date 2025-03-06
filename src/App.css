@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Square";
+  src: url("./fonts/Square.ttf") format("truetype");
+}
+
 #root {
   max-width: 80rem;
   margin: 0 auto;
@@ -10,4 +15,16 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 10%;
+}
+
+.load__more__button {
+  display: flex;
+  justify-content: end;
+  margin-top: 60px;
+}
+
+.load__more__button button {
+  background-color: rgb(239, 66, 66);
+  color: white;
+  font-family: "Square", sans-serif;
 }
