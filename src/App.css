@@ -28,3 +28,14 @@
   color: white;
   font-family: "Square", sans-serif;
 }
+
+.close__detail__page {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 2%;
+  font-size: xx-large;
+  color: black;
+}

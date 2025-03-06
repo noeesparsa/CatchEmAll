@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import "./PokemonCard.css";
-import PokemonType from "../pokemonTypeBadge/PokemonTypeBadge";
+import PokemonTypeBadge from "../pokemonTypeBadge/PokemonTypeBadge";
 
 type PokemonCardProps = {
   name: string;
@@ -20,7 +20,7 @@ const PokemonCard: FC<Readonly<PokemonCardProps>> = ({ name, id, imageURL, types
 
         <div className="type__badge">
           {types.map((type) => (
-            <PokemonType key={type} type={type} />
+            <PokemonTypeBadge key={type} type={type} />
           ))}
         </div>
       </div>

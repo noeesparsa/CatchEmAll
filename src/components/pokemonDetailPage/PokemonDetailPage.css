@@ -1,0 +1,40 @@
+#root {
+  width: 80em;
+}
+
+#header {
+  margin-bottom: 20px;
+}
+
+.card__details {
+  background-color: white;
+  color: black;
+  display: flex;
+  border-radius: 20px;
+  box-shadow: 10px 10px 10px rgba(68, 66, 66, 0.5);
+  border: 2px solid black;
+}
+
+.card__sprite {
+  margin: 10px;
+}
+
+.card__sprite img {
+  height: 225px;
+  width: 225px;
+}
+
+.close__page {
+  width: 10px;
+  margin: 10px;
+}
+
+.close__page p {
+  color: black;
+  font-size: x-large;
+  font-weight: 700;
+}
+
+.close__page a {
+  width: 10px;
+}

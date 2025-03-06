@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, useParams } from "react-router-dom";
 
 import PokemonCard from "./components/card/PokemonCard.tsx";
-// import PokemonDetailPage from "./components/pokemonDetailPage/PokemonDetailPage.tsx";
+import PokemonDetailPage from "./components/pokemonDetailPage/PokemonDetailPage.tsx";
 import { fetchPokemonList, fetchPokemonDetail } from "./services/Pokemon.service.ts";
 import { PokemonDetail } from "./types/Pokemon.type.ts";
 
@@ -53,7 +53,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route
-          path="/pokemon"
+          path="/pokemon/"
           element={
             <>
               <div id="header">
@@ -80,21 +80,53 @@ function App() {
             </>
           }
         />
-        {/* <Route
-          path="/pokemon/:id"
-          element={
-            <PokemonDetailPage
-              key={pokemonPage.id}
-              id={pokemonPage.id}
-              name={pokemonPage.name}
-              imageURL={pokemonPage.sprites.front_default}
-              types={getPokemonTypes(pokemonPage)}
-            />
-          }
-        /> */}
+        <Route path="/pokemon/:id" element={<PokemonDetailCard />} />
       </Routes>
     </BrowserRouter>
   );
+}
+
+function PokemonDetailCard() {
+  const { id } = useParams<{ id: string }>();
+  const [pokemon, setPokemon] = useState<PokemonDetail | null>(null);
+
+  useEffect(() => {
+    const loadPokemonDetail = async (): Promise<void> => {
+      try {
+        if (id) {
+          const pokemonDetail = await fetchPokemonDetail(`https://pokeapi.co/api/v2/pokemon/${id}`);
+          setPokemon(pokemonDetail);
+        }
+      } catch (error) {
+        console.error("Failed to load Pokémon detail", error);
+      }
+    };
+
+    loadPokemonDetail().catch((error) => {
+      console.error("Error in useEffect", error);
+    });
+  }, [id]);
+
+  if (pokemon) {
+    return (
+      <>
+        <div id="header">
+          <img src="./assets/logoPokedex.png" alt="Pokedex" />
+        </div>
+        <div className="close__page">
+          <Link to={`/pokemon/`}>
+            <p>x</p>
+          </Link>
+        </div>
+        <PokemonDetailPage
+          id={pokemon.id}
+          name={pokemon.name}
+          imageURL={pokemon.sprites.front_default}
+          types={pokemon.types.map((typeInfo) => typeInfo.type.name)}
+        />
+      </>
+    );
+  }
 }
 
 export default App;
