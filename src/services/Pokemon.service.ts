@@ -1,4 +1,9 @@
-import { PaginatedResult, PokemonLight, PokemonDetail } from "../types/Pokemon.type";
+import {
+  PaginatedResult,
+  PokemonLight,
+  PokemonDetail,
+  PokemonPageDetail,
+} from "../types/Pokemon.type";
 
 export async function fetchPokemonList(nextUrl?: string): Promise<{
   results: PokemonLight[];
@@ -14,5 +19,11 @@ export async function fetchPokemonList(nextUrl?: string): Promise<{
 export async function fetchPokemonDetail(url: string): Promise<PokemonDetail> {
   const response = await fetch(url);
   const data: PokemonDetail = await response.json();
+  return data;
+}
+
+export async function fetchPokemonPageDetail(url: string): Promise<PokemonPageDetail> {
+  const response = await fetch(url);
+  const data: PokemonPageDetail = await response.json();
   return data;
 }

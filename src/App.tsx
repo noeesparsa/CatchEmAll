@@ -3,9 +3,13 @@ import "./App.css";
 import { BrowserRouter, Routes, Route, Link, useParams } from "react-router-dom";
 
 import PokemonCard from "./components/card/PokemonCard.tsx";
-import PokemonDetailPage from "./components/pokemonDetailPage/PokemonDetailPage.tsx";
-import { fetchPokemonList, fetchPokemonDetail } from "./services/Pokemon.service.ts";
-import { PokemonDetail } from "./types/Pokemon.type.ts";
+import PokemonDetailPageComponent from "./components/pokemonDetailPage/PokemonDetailPage.tsx";
+import {
+  fetchPokemonList,
+  fetchPokemonDetail,
+  fetchPokemonPageDetail,
+} from "./services/Pokemon.service.ts";
+import { PokemonDetail, PokemonPageDetail } from "./types/Pokemon.type.ts";
 
 function App() {
   const [pokemonList, setPokemonList] = useState<PokemonDetail[]>([]);
@@ -88,13 +92,15 @@ function App() {
 
 function PokemonDetailCard() {
   const { id } = useParams<{ id: string }>();
-  const [pokemon, setPokemon] = useState<PokemonDetail | null>(null);
+  const [pokemon, setPokemon] = useState<PokemonPageDetail | null>(null);
 
   useEffect(() => {
     const loadPokemonDetail = async (): Promise<void> => {
       try {
         if (id) {
-          const pokemonDetail = await fetchPokemonDetail(`https://pokeapi.co/api/v2/pokemon/${id}`);
+          const pokemonDetail = await fetchPokemonPageDetail(
+            `https://pokeapi.co/api/v2/pokemon/${id}`,
+          );
           setPokemon(pokemonDetail);
         }
       } catch (error) {
@@ -107,6 +113,17 @@ function PokemonDetailCard() {
     });
   }, [id]);
 
+  const getPokemonAbilities = (pokemon: PokemonPageDetail) => {
+    return pokemon.abilities.map((abilityInfo) => abilityInfo.ability.name);
+  };
+
+  const getPokemonStats = (pokemon: PokemonPageDetail) => {
+    return pokemon.stats.map((statInfo) => ({
+      name: statInfo.stat.name,
+      base_stat: statInfo.base_stat,
+    }));
+  };
+
   if (pokemon) {
     return (
       <>
@@ -118,11 +135,15 @@ function PokemonDetailCard() {
             <p>x</p>
           </Link>
         </div>
-        <PokemonDetailPage
+        <PokemonDetailPageComponent
           id={pokemon.id}
           name={pokemon.name}
           imageURL={pokemon.sprites.front_default}
           types={pokemon.types.map((typeInfo) => typeInfo.type.name)}
+          weight={pokemon.weight}
+          height={pokemon.height}
+          abilities={getPokemonAbilities(pokemon)}
+          stats={getPokemonStats(pokemon)}
         />
       </>
     );
