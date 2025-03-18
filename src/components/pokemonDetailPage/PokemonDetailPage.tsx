@@ -42,7 +42,7 @@ const PokemonDetailPageComponent: React.FC<PokemonDetailPageProps> = ({
         setDescription(data.flavor_text_entries[0].flavor_text);
       } catch (error) {
         console.error("Error retrieving description:", error);
-        setDescription("Failed to load description.");
+        setDescription("Description not found.");
       }
     };
 
