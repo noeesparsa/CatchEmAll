@@ -84,13 +84,13 @@ function App() {
             </>
           }
         />
-        <Route path="/pokemon/:id" element={<PokemonDetailCard />} />
+        <Route path="/pokemon/:id" element={<PokemonDetailPageCard />} />
       </Routes>
     </BrowserRouter>
   );
 }
 
-function PokemonDetailCard() {
+function PokemonDetailPageCard() {
   const { id } = useParams<{ id: string }>();
   const [pokemon, setPokemon] = useState<PokemonDetailPage | null>(null);
 
