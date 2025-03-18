@@ -42,6 +42,7 @@
 .card__footer__sprite img {
   height: 225px;
   width: 225px;
+  image-rendering: pixelated;
 }
 
 .card__footer {
