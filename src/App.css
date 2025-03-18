@@ -17,6 +17,10 @@
   margin-bottom: 10%;
 }
 
+#header img {
+  height: 100px;
+}
+
 .load__more__button {
   display: flex;
   justify-content: end;

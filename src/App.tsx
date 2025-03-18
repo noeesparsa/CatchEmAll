@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Link, useParams } from "react-router-dom";
 
-import PokemonCard from "./components/card/PokemonCard.tsx";
+import PokemonCard from "./components/pokemonCard/PokemonCard.tsx";
 import PokemonDetailPageComponent from "./components/pokemonDetailPage/PokemonDetailPage.tsx";
 import {
   fetchPokemonList,
