@@ -48,3 +48,27 @@ export type PokemonPageDetail = {
     };
   }[];
 };
+
+export type PokemonDescription = {
+  flavor_text_entries: {
+    flavor_text: string;
+  }[];
+};
+
+// export type EvolutionChain = {
+//   chain: {
+//     species: {
+//       name: string; //1ere evo
+//     };
+//     evolves_to?: {
+//       species: {
+//         name: string; //2eme evo
+//       };
+//       evolves_to?: {
+//         species: {
+//           name: string; //3eme evo
+//         };
+//       }[];
+//     }[];
+//   };
+// };
