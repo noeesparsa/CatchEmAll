@@ -3,6 +3,8 @@ import {
   PokemonLight,
   PokemonDetail,
   PokemonPageDetail,
+  // EvolutionChain,
+  PokemonDescription,
 } from "../types/Pokemon.type";
 
 export async function fetchPokemonList(nextUrl?: string): Promise<{
@@ -27,3 +29,15 @@ export async function fetchPokemonPageDetail(url: string): Promise<PokemonPageDe
   const data: PokemonPageDetail = await response.json();
   return data;
 }
+
+export async function fetchPokemonDescription(id: number): Promise<PokemonDescription> {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`);
+  const data: PokemonDescription = await response.json();
+  return data;
+}
+
+// export async function fetchEvolutionChain(id: number): Promise<EvolutionChain> {
+//   const response = await fetch(`https://pokeapi.co/api/v2/evolution-chain/${id}/`);
+//   const data: EvolutionChain = await response.json();
+//   return data;
+// }
