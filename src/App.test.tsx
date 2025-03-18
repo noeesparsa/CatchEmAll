@@ -3,21 +3,21 @@ import { vi } from "vitest";
 
 import App from "./App";
 import * as pokemonService from "./services/Pokemon.service.ts";
-import { PokemonLight } from "./types/Pokemon.type.ts";
+import { PokemonList } from "./types/Pokemon.type.ts";
 
 export const mockedPokemonList = [
   {
     name: "bulbasaur",
     url: "https://pokeapi.co/api/v2/pokemon/1/",
   },
-] as Array<PokemonLight>;
+] as Array<PokemonList>;
 
 export const mockedPokemonListMore = [
   {
     name: "pikachu",
     url: "https://pokeapi.co/api/v2/pokemon/45/",
   },
-] as Array<PokemonLight>;
+] as Array<PokemonList>;
 
 export const mockedPokemonDetail = {
   id: 1,
@@ -52,7 +52,7 @@ describe("App", () => {
   });
 
   it("should render a few Pokemon", async () => {
-    vi.spyOn(pokemonService, "fetchPokemonDetail").mockResolvedValue(mockedPokemonDetail);
+    vi.spyOn(pokemonService, "fetchPokemonCardInfo").mockResolvedValue(mockedPokemonDetail);
 
     render(<App />);
 
@@ -76,7 +76,7 @@ describe("App", () => {
         });
 
       const loadMorePokemonDetails = vi
-        .spyOn(pokemonService, "fetchPokemonDetail")
+        .spyOn(pokemonService, "fetchPokemonCardInfo")
         .mockResolvedValueOnce(mockedPokemonDetail)
         .mockResolvedValueOnce(mockedPokemonDetailMore);
 

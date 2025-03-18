@@ -1,4 +1,4 @@
-export type PokemonLight = {
+export type PokemonList = {
   name: string;
   url: string;
 };
@@ -10,7 +10,7 @@ export type PaginatedResult<T> = {
   results: T[];
 };
 
-export type PokemonDetail = {
+export type PokemonCardInfo = {
   id: number;
   name: string;
   sprites: {
@@ -23,7 +23,7 @@ export type PokemonDetail = {
   }[];
 };
 
-export type PokemonPageDetail = {
+export type PokemonDetailPage = {
   id: number;
   name: string;
   sprites: {

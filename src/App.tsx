@@ -6,13 +6,13 @@ import PokemonCard from "./components/pokemonCard/PokemonCard.tsx";
 import PokemonDetailPageComponent from "./components/pokemonDetailPage/PokemonDetailPage.tsx";
 import {
   fetchPokemonList,
-  fetchPokemonDetail,
+  fetchPokemonCardInfo,
   fetchPokemonPageDetail,
 } from "./services/Pokemon.service.ts";
-import { PokemonDetail, PokemonPageDetail } from "./types/Pokemon.type.ts";
+import { PokemonCardInfo, PokemonDetailPage } from "./types/Pokemon.type.ts";
 
 function App() {
-  const [pokemonList, setPokemonList] = useState<PokemonDetail[]>([]);
+  const [pokemonList, setPokemonList] = useState<PokemonCardInfo[]>([]);
   const [nextUrl, setNextUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ function App() {
       try {
         const { results, next } = await fetchPokemonList();
         const pokemonDetailedList = await Promise.all(
-          results.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
+          results.map((PokemonList) => fetchPokemonCardInfo(PokemonList.url)),
         );
         setPokemonList(pokemonDetailedList);
         setNextUrl(next);
@@ -39,7 +39,7 @@ function App() {
       if (nextUrl) {
         const { results, next } = await fetchPokemonList(nextUrl);
         const pokemonDetailedList = await Promise.all(
-          results.map((pokemonLight) => fetchPokemonDetail(pokemonLight.url)),
+          results.map((PokemonList) => fetchPokemonCardInfo(PokemonList.url)),
         );
         setPokemonList((prevList) => [...prevList, ...pokemonDetailedList]);
         setNextUrl(next);
@@ -49,7 +49,7 @@ function App() {
     }
   };
 
-  const getPokemonTypes = (pokemon: PokemonDetail) => {
+  const getPokemonTypes = (pokemon: PokemonCardInfo) => {
     return pokemon.types.map((typeInfo) => typeInfo.type.name);
   };
 
@@ -92,16 +92,16 @@ function App() {
 
 function PokemonDetailCard() {
   const { id } = useParams<{ id: string }>();
-  const [pokemon, setPokemon] = useState<PokemonPageDetail | null>(null);
+  const [pokemon, setPokemon] = useState<PokemonDetailPage | null>(null);
 
   useEffect(() => {
     const loadPokemonDetail = async (): Promise<void> => {
       try {
         if (id) {
-          const pokemonDetail = await fetchPokemonPageDetail(
+          const PokemonCardInfo = await fetchPokemonPageDetail(
             `https://pokeapi.co/api/v2/pokemon/${id}`,
           );
-          setPokemon(pokemonDetail);
+          setPokemon(PokemonCardInfo);
         }
       } catch (error) {
         console.error("Failed to load Pokémon detail", error);
@@ -113,11 +113,11 @@ function PokemonDetailCard() {
     });
   }, [id]);
 
-  const getPokemonAbilities = (pokemon: PokemonPageDetail) => {
+  const getPokemonAbilities = (pokemon: PokemonDetailPage) => {
     return pokemon.abilities.map((abilityInfo) => abilityInfo.ability.name);
   };
 
-  const getPokemonStats = (pokemon: PokemonPageDetail) => {
+  const getPokemonStats = (pokemon: PokemonDetailPage) => {
     return pokemon.stats.map((statInfo) => ({
       name: statInfo.stat.name,
       base_stat: statInfo.base_stat,
