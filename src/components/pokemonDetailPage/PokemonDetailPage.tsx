@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import PokemonTypeBadge from "../pokemonTypeBadge/PokemonTypeBadge";
 import "./PokemonDetailPage.css";
@@ -32,6 +32,27 @@ const PokemonDetailPageComponent: React.FC<PokemonDetailPageProps> = ({
   abilities,
   stats,
 }) => {
+  const [description, setDescription] = useState<string>("");
+
+  useEffect(() => {
+    const fetchDescription = async () => {
+      try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`);
+        const data = await response.json();
+        setDescription(data.flavor_text_entries[0].flavor_text);
+      } catch (error) {
+        console.error("Error retrieving description:", error);
+        setDescription("Failed to load description.");
+      }
+    };
+
+    fetchDescription();
+  }, [id]);
+
+  if (!description) {
+    return <div className="loading">Loading...</div>;
+  }
+
   return (
     <div className="card__details">
       <div className="card__sprite">
@@ -49,6 +70,9 @@ const PokemonDetailPageComponent: React.FC<PokemonDetailPageProps> = ({
           {types.map((type) => (
             <PokemonTypeBadge key={type} type={type} />
           ))}
+        </div>
+        <div className="card_right_side_description">
+          <p>{description}</p>
         </div>
         <div className="card_right_side_body">
           <p>

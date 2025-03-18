@@ -146,6 +146,10 @@
   font-weight: 600;
 }
 
+.loading {
+  color: black;
+}
+
 @media (max-width: 768px) {
   .card__details {
     flex-direction: column;
