@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { BrowserRouter, Routes, Route, Link, useParams } from "react-router-dom";
+import { Routes, Route, Link, useParams, BrowserRouter } from "react-router-dom";
 
 import PokemonCard from "./components/pokemonCard/PokemonCard.tsx";
 import PokemonDetailPageComponent from "./components/pokemonDetailPage/PokemonDetailPage.tsx";
@@ -24,19 +24,23 @@ function App() {
   useEffect(() => {
     if (searchTerm) {
       searchPokemon(searchTerm);
-    } else {
+    } else if (searchTerm === "") {
       resetPokemonList();
     }
   }, [searchTerm]);
 
   const loadPokemonData = async (): Promise<void> => {
     try {
-      const { results, next } = await fetchPokemonList();
-      const pokemonDetailedList = await Promise.all(
-        results.map((PokemonList) => fetchPokemonCardInfo(PokemonList.url)),
-      );
-      setPokemonList(pokemonDetailedList);
-      setNextUrl(next);
+      const data = await fetchPokemonList();
+      if (data && data.results) {
+        const pokemonDetailedList = await Promise.all(
+          data.results.map((pokemon) => fetchPokemonCardInfo(pokemon.url)),
+        );
+        setPokemonList(pokemonDetailedList);
+        setNextUrl(data.next);
+      } else {
+        console.error("No Pokémon data found");
+      }
     } catch (error) {
       console.error("Failed to load Pokémon data", error);
     }
@@ -51,12 +55,16 @@ function App() {
   const loadMorePokemon = async (): Promise<void> => {
     try {
       if (nextUrl) {
-        const { results, next } = await fetchPokemonList(nextUrl);
-        const pokemonDetailedList = await Promise.all(
-          results.map((PokemonList) => fetchPokemonCardInfo(PokemonList.url)),
-        );
-        setPokemonList((prevList) => [...prevList, ...pokemonDetailedList]);
-        setNextUrl(next);
+        const data = await fetchPokemonList(nextUrl);
+        if (data && data.results) {
+          const pokemonDetailedList = await Promise.all(
+            data.results.map((pokemon) => fetchPokemonCardInfo(pokemon.url)),
+          );
+          setPokemonList((prevList) => [...prevList, ...pokemonDetailedList]);
+          setNextUrl(data.next);
+        } else {
+          console.error("No more Pokémon data found");
+        }
       }
     } catch (error) {
       console.error("Failed to load more Pokémon data", error);
@@ -97,7 +105,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route
-          path="/pokemon/"
+          path="/"
           element={
             <>
               <div id="header">
@@ -178,12 +186,7 @@ function PokemonDetailPageCard() {
     return (
       <>
         <div id="header">
-          <img src="./assets/logoPokedex.png" alt="Pokedex" />
-        </div>
-        <div className="close__page">
-          <Link to={`/pokemon/`}>
-            <p>x</p>
-          </Link>
+          <img src="../assets/logoPokedex.png" alt="Pokedex" />
         </div>
         <PokemonDetailPageComponent
           id={pokemon.id}

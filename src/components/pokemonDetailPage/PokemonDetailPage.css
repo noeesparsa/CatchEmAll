@@ -1,5 +1,6 @@
 #header {
   margin-bottom: 20px;
+  margin-bottom: 10%;
 }
 
 .close__page {
@@ -149,6 +150,12 @@
 
 .loading {
   color: black;
+}
+
+.close__page p {
+  margin-top: 0;
+  padding-top: 0;
+  margin-left: 10px;
 }
 
 @media (max-width: 768px) {

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 import PokemonTypeBadge from "../pokemonTypeBadge/PokemonTypeBadge";
+
 import "./PokemonDetailPage.css";
+import { Link } from "react-router-dom";
 
 type PokemonDetailPageProps = {
   id: number;
@@ -55,6 +57,11 @@ const PokemonDetailPageComponent: React.FC<PokemonDetailPageProps> = ({
 
   return (
     <div className="card__details">
+      <div className="close__page">
+        <Link to={`/`}>
+          <p className="close__button">x</p>
+        </Link>
+      </div>
       <div className="card__sprite">
         <img src={imageURL} alt={name} />
       </div>

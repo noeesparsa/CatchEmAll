@@ -30,7 +30,7 @@ export const mockedPokemonDetailMore = {
   id: 45,
   name: "pikachu",
   sprites: { front_default: "pikachu.png" },
-  types: [{ type: { name: "electric" } }, { type: { name: "electric" } }],
+  types: [{ type: { name: "electric" } }],
 };
 
 describe("App", () => {
@@ -88,8 +88,8 @@ describe("App", () => {
       await act(async () => {
         await fireEvent.click(button);
       });
-      expect(loadMorePokemon).toHaveBeenCalledTimes(2);
-      expect(loadMorePokemonDetails).toHaveBeenCalledTimes(2);
+      expect(loadMorePokemon).toHaveBeenCalledTimes(3); // 1er useEffect, 2eme resetPokemonList, 3eme Load More buttton
+      expect(loadMorePokemonDetails).toHaveBeenCalledTimes(3);
 
       for (const pokemon of expectedPokemonList) {
         const pokemonName = await screen.getByText(pokemon.name);
