@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import PokemonTypeBadge from "../pokemonTypeBadge/PokemonTypeBadge";
 
 import "./PokemonDetailPage.css";
-import { Link } from "react-router-dom";
 
 type PokemonDetailPageProps = {
   id: number;
