@@ -24,23 +24,19 @@ function App() {
   useEffect(() => {
     if (searchTerm) {
       searchPokemon(searchTerm);
-    } else if (searchTerm === "") {
+    } else {
       resetPokemonList();
     }
   }, [searchTerm]);
 
   const loadPokemonData = async (): Promise<void> => {
     try {
-      const data = await fetchPokemonList();
-      if (data && data.results) {
-        const pokemonDetailedList = await Promise.all(
-          data.results.map((pokemon) => fetchPokemonCardInfo(pokemon.url)),
-        );
-        setPokemonList(pokemonDetailedList);
-        setNextUrl(data.next);
-      } else {
-        console.error("No Pokémon data found");
-      }
+      const { results, next } = await fetchPokemonList();
+      const pokemonDetailedList = await Promise.all(
+        results.map((PokemonList) => fetchPokemonCardInfo(PokemonList.url)),
+      );
+      setPokemonList(pokemonDetailedList);
+      setNextUrl(next);
     } catch (error) {
       console.error("Failed to load Pokémon data", error);
     }
@@ -55,16 +51,12 @@ function App() {
   const loadMorePokemon = async (): Promise<void> => {
     try {
       if (nextUrl) {
-        const data = await fetchPokemonList(nextUrl);
-        if (data && data.results) {
-          const pokemonDetailedList = await Promise.all(
-            data.results.map((pokemon) => fetchPokemonCardInfo(pokemon.url)),
-          );
-          setPokemonList((prevList) => [...prevList, ...pokemonDetailedList]);
-          setNextUrl(data.next);
-        } else {
-          console.error("No more Pokémon data found");
-        }
+        const { results, next } = await fetchPokemonList(nextUrl);
+        const pokemonDetailedList = await Promise.all(
+          results.map((PokemonList) => fetchPokemonCardInfo(PokemonList.url)),
+        );
+        setPokemonList((prevList) => [...prevList, ...pokemonDetailedList]);
+        setNextUrl(next);
       }
     } catch (error) {
       console.error("Failed to load more Pokémon data", error);
@@ -166,9 +158,7 @@ function PokemonDetailPageCard() {
       }
     };
 
-    loadPokemonDetail().catch((error) => {
-      console.error("Error in useEffect", error);
-    });
+    loadPokemonDetail();
   }, [id]);
 
   const getPokemonAbilities = (pokemon: PokemonDetailPage) => {
