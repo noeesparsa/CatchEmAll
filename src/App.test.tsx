@@ -1,4 +1,5 @@
-import { render, screen, fireEvent, act } from "@testing-library/react";
+import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
+import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { vi } from "vitest";
 
 import App from "./App";
@@ -31,6 +32,24 @@ export const mockedPokemonDetailMore = {
   name: "pikachu",
   sprites: { front_default: "pikachu.png" },
   types: [{ type: { name: "electric" } }],
+};
+
+export const mockedPokemonDetailPage = {
+  id: 1,
+  name: "bulbasaur",
+  sprites: { front_default: "bulbasaur.png" },
+  types: [{ type: { name: "grass" } }, { type: { name: "poison" } }],
+  height: 7,
+  weight: 69,
+  abilities: [{ ability: { name: "overgrow" } }, { ability: { name: "chlorophyll" } }],
+  stats: [
+    { base_stat: 45, stat: { name: "hp" } },
+    { base_stat: 49, stat: { name: "attack" } },
+    { base_stat: 49, stat: { name: "defense" } },
+    { base_stat: 65, stat: { name: "special-attack" } },
+    { base_stat: 65, stat: { name: "special-defense" } },
+    { base_stat: 45, stat: { name: "speed" } },
+  ],
 };
 
 describe("App", () => {
@@ -95,6 +114,59 @@ describe("App", () => {
         const pokemonName = await screen.getByText(pokemon.name);
         expect(pokemonName).toBeVisible();
       }
+    });
+  });
+
+  describe("When the user searches for a Pokémon", () => {
+    it("should render the searched Pokémon", async () => {
+      const searchTerm = "bulbasaur";
+
+      vi.spyOn(global, "fetch").mockResolvedValue({
+        json: async () => ({
+          results: mockedPokemonList,
+        }),
+      } as Response);
+
+      vi.spyOn(pokemonService, "fetchPokemonCardInfo").mockResolvedValue(mockedPokemonDetail);
+
+      render(<App />);
+
+      const searchInput = screen.getByPlaceholderText("Search Pokémon");
+      await act(async () => {
+        fireEvent.change(searchInput, { target: { value: searchTerm } });
+      });
+
+      const pokemonName = await screen.findByText(mockedPokemonDetail.name);
+      expect(pokemonName).toBeVisible();
+    });
+  });
+
+  describe("PokemonDetailPageCard", () => {
+    describe("PokemonDetailPageCard", () => {
+      it("should render Pokémon details", async () => {
+        vi.spyOn(pokemonService, "fetchPokemonPageDetail").mockResolvedValue(
+          mockedPokemonDetailPage,
+        );
+
+        render(
+          <MemoryRouter initialEntries={["/pokemon/1"]}>
+            <Routes>
+              <Route path="/pokemon/:id" element={<App />} />
+            </Routes>
+          </MemoryRouter>,
+        );
+
+        await waitFor(() => {
+          expect(screen.getByText("bulbasaur")).toBeVisible();
+          expect(screen.getByAltText("Pokedex")).toBeVisible();
+          expect(screen.getByText("grass")).toBeVisible();
+          expect(screen.getByText("poison")).toBeVisible();
+          expect(screen.getByText("overgrow")).toBeVisible();
+          expect(screen.getByText("chlorophyll")).toBeVisible();
+          expect(screen.getByText("hp")).toBeVisible();
+          expect(screen.getByText("45")).toBeVisible();
+        });
+      });
     });
   });
 });
