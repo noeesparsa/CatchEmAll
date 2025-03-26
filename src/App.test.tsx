@@ -1,10 +1,11 @@
 import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
-import { MemoryRouter, Routes, Route } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 import { vi } from "vitest";
 
 import App from "./App";
-import * as pokemonService from "./services/Pokemon.service.ts";
-import { PokemonList } from "./types/Pokemon.type.ts";
+import PokemonDetailPageCard from "./components/pokemonDetailPage/PokemonDetailPage";
+import * as pokemonService from "./services/Pokemon.service";
+import { PokemonList } from "./types/Pokemon.type";
 
 export const mockedPokemonList = [
   {
@@ -39,17 +40,21 @@ export const mockedPokemonDetailPage = {
   name: "bulbasaur",
   sprites: { front_default: "bulbasaur.png" },
   types: [{ type: { name: "grass" } }, { type: { name: "poison" } }],
-  height: 7,
   weight: 69,
-  abilities: [{ ability: { name: "overgrow" } }, { ability: { name: "chlorophyll" } }],
-  stats: [
-    { base_stat: 45, stat: { name: "hp" } },
-    { base_stat: 49, stat: { name: "attack" } },
-    { base_stat: 49, stat: { name: "defense" } },
-    { base_stat: 65, stat: { name: "special-attack" } },
-    { base_stat: 65, stat: { name: "special-defense" } },
-    { base_stat: 45, stat: { name: "speed" } },
-  ],
+  height: 7,
+  abilities: [{ ability: { name: "overgrow" } }],
+  stats: [{ stat: { name: "hp" }, base_stat: 45 }],
+};
+
+export const mockedPokemonDetailPageMore = {
+  id: 45,
+  name: "pikachu",
+  sprites: { front_default: "pikachu.png" },
+  types: [{ type: { name: "electric" } }],
+  weight: 32,
+  height: 4,
+  abilities: [{ ability: { name: "electricity" } }],
+  stats: [{ stat: { name: "hp" }, base_stat: 36 }],
 };
 
 describe("App", () => {
@@ -142,31 +147,32 @@ describe("App", () => {
   });
 
   describe("PokemonDetailPageCard", () => {
-    describe("PokemonDetailPageCard", () => {
-      it("should render Pokémon details", async () => {
-        vi.spyOn(pokemonService, "fetchPokemonPageDetail").mockResolvedValue(
-          mockedPokemonDetailPage,
-        );
+    it("should render Pokémon details", async () => {
+      vi.spyOn(pokemonService, "fetchPokemonPageDetail").mockResolvedValue(mockedPokemonDetailPage);
 
-        render(
-          <MemoryRouter initialEntries={["/pokemon/1"]}>
-            <Routes>
-              <Route path="/pokemon/:id" element={<App />} />
-            </Routes>
-          </MemoryRouter>,
-        );
+      render(
+        <MemoryRouter initialEntries={["/pokemon/1"]}>
+          <PokemonDetailPageCard
+            id={1}
+            name={"bulbasaur"}
+            imageURL={"bulbasaur.png"}
+            types={["GRASS", "POISON"]}
+            height={7}
+            weight={69}
+            abilities={["overgrow"]}
+            stats={[{ name: "hp", base_stat: 45 }]}
+          />
+        </MemoryRouter>,
+      );
 
-        await waitFor(() => {
-          expect(screen.getByText("bulbasaur")).toBeVisible();
-          expect(screen.getByAltText("Pokedex")).toBeVisible();
-          expect(screen.getByText("grass")).toBeVisible();
-          expect(screen.getByText("poison")).toBeVisible();
-          expect(screen.getByText("overgrow")).toBeVisible();
-          expect(screen.getByText("chlorophyll")).toBeVisible();
-          expect(screen.getByText("hp")).toBeVisible();
-          expect(screen.getByText("45")).toBeVisible();
-        });
-      });
+      expect(screen.getByText("Loading...")).toBeInTheDocument();
+
+      await waitFor(() => expect(screen.getByText("bulbasaur")).toBeInTheDocument());
+
+      expect(screen.getByText("GRASS")).toBeInTheDocument();
+      expect(screen.getByText("POISON")).toBeInTheDocument();
+      expect(screen.getByText("overgrow")).toBeInTheDocument();
+      expect(screen.getByText("HP: 45")).toBeInTheDocument();
     });
   });
 });

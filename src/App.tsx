@@ -161,6 +161,10 @@ function PokemonDetailPageCard() {
     loadPokemonDetail();
   }, [id]);
 
+  const getPokemonTypes = (pokemon: PokemonCardInfo) => {
+    return pokemon.types.map((typeInfo) => typeInfo.type.name);
+  };
+
   const getPokemonAbilities = (pokemon: PokemonDetailPage) => {
     return pokemon.abilities.map((abilityInfo) => abilityInfo.ability.name);
   };
@@ -182,7 +186,7 @@ function PokemonDetailPageCard() {
           id={pokemon.id}
           name={pokemon.name}
           imageURL={pokemon.sprites.front_default}
-          types={pokemon.types.map((typeInfo) => typeInfo.type.name)}
+          types={getPokemonTypes(pokemon)}
           weight={pokemon.weight}
           height={pokemon.height}
           abilities={getPokemonAbilities(pokemon)}
