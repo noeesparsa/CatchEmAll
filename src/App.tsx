@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { Routes, Route, Link, useParams, BrowserRouter } from "react-router-dom";
+import { Routes, Route, Link, BrowserRouter } from "react-router-dom";
 
 import PokemonCard from "./components/pokemonCard/PokemonCard.tsx";
-import PokemonDetailPageComponent from "./components/pokemonDetailPage/PokemonDetailPage.tsx";
-import {
-  fetchPokemonList,
-  fetchPokemonCardInfo,
-  fetchPokemonPageDetail,
-} from "./services/Pokemon.service.ts";
-import { PokemonCardInfo, PokemonDetailPage } from "./types/Pokemon.type.ts";
+import PokemonDetailPageCard from "./components/pokemonDetailPage/PokemonDetailPage.tsx";
+import { fetchPokemonList, fetchPokemonCardInfo } from "./services/Pokemon.service.ts";
+import { PokemonCardInfo } from "./types/Pokemon.type.ts";
 
 function App() {
   const [pokemonList, setPokemonList] = useState<PokemonCardInfo[]>([]);
@@ -138,63 +134,6 @@ function App() {
       </Routes>
     </BrowserRouter>
   );
-}
-
-function PokemonDetailPageCard() {
-  const { id } = useParams<{ id: string }>();
-  const [pokemon, setPokemon] = useState<PokemonDetailPage | null>(null);
-
-  useEffect(() => {
-    const loadPokemonDetail = async (): Promise<void> => {
-      try {
-        if (id) {
-          const PokemonCardInfo = await fetchPokemonPageDetail(
-            `https://pokeapi.co/api/v2/pokemon/${id}`,
-          );
-          setPokemon(PokemonCardInfo);
-        }
-      } catch (error) {
-        console.error("Failed to load Pokémon detail", error);
-      }
-    };
-
-    loadPokemonDetail();
-  }, [id]);
-
-  const getPokemonTypes = (pokemon: PokemonCardInfo) => {
-    return pokemon.types.map((typeInfo) => typeInfo.type.name);
-  };
-
-  const getPokemonAbilities = (pokemon: PokemonDetailPage) => {
-    return pokemon.abilities.map((abilityInfo) => abilityInfo.ability.name);
-  };
-
-  const getPokemonStats = (pokemon: PokemonDetailPage) => {
-    return pokemon.stats.map((statInfo) => ({
-      name: statInfo.stat.name,
-      base_stat: statInfo.base_stat,
-    }));
-  };
-
-  if (pokemon) {
-    return (
-      <>
-        <div id="header">
-          <img src="../assets/logoPokedex.png" alt="Pokedex" />
-        </div>
-        <PokemonDetailPageComponent
-          id={pokemon.id}
-          name={pokemon.name}
-          imageURL={pokemon.sprites.front_default}
-          types={getPokemonTypes(pokemon)}
-          weight={pokemon.weight}
-          height={pokemon.height}
-          abilities={getPokemonAbilities(pokemon)}
-          stats={getPokemonStats(pokemon)}
-        />
-      </>
-    );
-  }
 }
 
 export default App;

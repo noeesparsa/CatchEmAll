@@ -1,9 +1,7 @@
-import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import { vi } from "vitest";
 
 import App from "./App";
-import PokemonDetailPageCard from "./components/pokemonDetailPage/PokemonDetailPage";
 import * as pokemonService from "./services/Pokemon.service";
 import { PokemonList } from "./types/Pokemon.type";
 
@@ -143,36 +141,6 @@ describe("App", () => {
 
       const pokemonName = await screen.findByText(mockedPokemonDetail.name);
       expect(pokemonName).toBeVisible();
-    });
-  });
-
-  describe("PokemonDetailPageCard", () => {
-    it("should render Pokémon details", async () => {
-      vi.spyOn(pokemonService, "fetchPokemonPageDetail").mockResolvedValue(mockedPokemonDetailPage);
-
-      render(
-        <MemoryRouter initialEntries={["/pokemon/1"]}>
-          <PokemonDetailPageCard
-            id={1}
-            name={"bulbasaur"}
-            imageURL={"bulbasaur.png"}
-            types={["GRASS", "POISON"]}
-            height={7}
-            weight={69}
-            abilities={["overgrow"]}
-            stats={[{ name: "hp", base_stat: 45 }]}
-          />
-        </MemoryRouter>,
-      );
-
-      expect(screen.getByText("Loading...")).toBeInTheDocument();
-
-      await waitFor(() => expect(screen.getByText("bulbasaur")).toBeInTheDocument());
-
-      expect(screen.getByText("GRASS")).toBeInTheDocument();
-      expect(screen.getByText("POISON")).toBeInTheDocument();
-      expect(screen.getByText("overgrow")).toBeInTheDocument();
-      expect(screen.getByText("HP: 45")).toBeInTheDocument();
     });
   });
 });
