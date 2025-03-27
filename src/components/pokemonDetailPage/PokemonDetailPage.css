@@ -71,15 +71,19 @@
 
 .card_right_side_body p {
   background-color: #e9eaee;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: 20px;
+  display: flex;
+  justify-content: center;
+  padding-right: 20px;
 }
 
 .card_right_side_body span {
   font-weight: 700;
+  background-color: #e9eaee;
+  padding-left: 15px;
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-right: 30px;
 }
 
 .stats {
