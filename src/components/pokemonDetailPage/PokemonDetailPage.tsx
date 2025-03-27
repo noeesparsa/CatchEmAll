@@ -98,14 +98,12 @@ const PokemonDetailPageCard: React.FC = () => {
             <p>{description}</p>
           </div>
           <div className="card_right_side_body">
-            <p>
-              <span>Height : </span>
-              {pokemon.height}
-            </p>
-            <p>
-              <span>Weight : </span>
-              {pokemon.weight}
-            </p>
+            <span>
+              <p>Height: {pokemon.height}</p>
+            </span>
+            <span>
+              <p>Weight: {pokemon.weight}</p>
+            </span>
           </div>
           <div className="stats">
             <h2>Stats</h2>
