@@ -2,22 +2,22 @@ import { render, screen, fireEvent, act } from "@testing-library/react";
 import { vi } from "vitest";
 
 import App from "./App";
-import * as pokemonService from "./services/Pokemon.service.ts";
-import { PokemonLight } from "./types/Pokemon.type.ts";
+import * as pokemonService from "./services/Pokemon.service";
+import { PokemonList } from "./types/Pokemon.type";
 
 export const mockedPokemonList = [
   {
     name: "bulbasaur",
     url: "https://pokeapi.co/api/v2/pokemon/1/",
   },
-] as Array<PokemonLight>;
+] as Array<PokemonList>;
 
 export const mockedPokemonListMore = [
   {
     name: "pikachu",
     url: "https://pokeapi.co/api/v2/pokemon/45/",
   },
-] as Array<PokemonLight>;
+] as Array<PokemonList>;
 
 export const mockedPokemonDetail = {
   id: 1,
@@ -30,7 +30,18 @@ export const mockedPokemonDetailMore = {
   id: 45,
   name: "pikachu",
   sprites: { front_default: "pikachu.png" },
-  types: [{ type: { name: "electric" } }, { type: { name: "electric" } }],
+  types: [{ type: { name: "electric" } }],
+};
+
+export const mockedPokemonDetailPageMore = {
+  id: 45,
+  name: "pikachu",
+  sprites: { front_default: "pikachu.png" },
+  types: [{ type: { name: "electric" } }],
+  weight: 32,
+  height: 4,
+  abilities: [{ ability: { name: "electricity" } }],
+  stats: [{ stat: { name: "hp" }, base_stat: 36 }],
 };
 
 describe("App", () => {
@@ -52,7 +63,7 @@ describe("App", () => {
   });
 
   it("should render a few Pokemon", async () => {
-    vi.spyOn(pokemonService, "fetchPokemonDetail").mockResolvedValue(mockedPokemonDetail);
+    vi.spyOn(pokemonService, "fetchPokemonCardInfo").mockResolvedValue(mockedPokemonDetail);
 
     render(<App />);
 
@@ -76,7 +87,7 @@ describe("App", () => {
         });
 
       const loadMorePokemonDetails = vi
-        .spyOn(pokemonService, "fetchPokemonDetail")
+        .spyOn(pokemonService, "fetchPokemonCardInfo")
         .mockResolvedValueOnce(mockedPokemonDetail)
         .mockResolvedValueOnce(mockedPokemonDetailMore);
 
@@ -88,13 +99,37 @@ describe("App", () => {
       await act(async () => {
         await fireEvent.click(button);
       });
-      expect(loadMorePokemon).toHaveBeenCalledTimes(2);
-      expect(loadMorePokemonDetails).toHaveBeenCalledTimes(2);
+      expect(loadMorePokemon).toHaveBeenCalledTimes(3); // 1er useEffect, 2eme resetPokemonList, 3eme Load More buttton
+      expect(loadMorePokemonDetails).toHaveBeenCalledTimes(3);
 
       for (const pokemon of expectedPokemonList) {
         const pokemonName = await screen.getByText(pokemon.name);
         expect(pokemonName).toBeVisible();
       }
+    });
+  });
+
+  describe("When the user searches for a Pokémon", () => {
+    it("should render the searched Pokémon", async () => {
+      const searchTerm = "bulbasaur";
+
+      vi.spyOn(global, "fetch").mockResolvedValue({
+        json: async () => ({
+          results: mockedPokemonList,
+        }),
+      } as Response);
+
+      vi.spyOn(pokemonService, "fetchPokemonCardInfo").mockResolvedValue(mockedPokemonDetail);
+
+      render(<App />);
+
+      const searchInput = screen.getByPlaceholderText("Search Pokémon");
+      await act(async () => {
+        fireEvent.change(searchInput, { target: { value: searchTerm } });
+      });
+
+      const pokemonName = await screen.findByText(mockedPokemonDetail.name);
+      expect(pokemonName).toBeVisible();
     });
   });
 });

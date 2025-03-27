@@ -8,7 +8,7 @@ import * as pokemonService from "../src/services/Pokemon.service.ts";
 
 beforeAll(() => {
   vi.spyOn(pokemonService, "fetchPokemonList").mockResolvedValue(mockedPokemonList);
-  vi.spyOn(pokemonService, "fetchPokemonDetail").mockResolvedValue(mockedPokemonDetail);
+  vi.spyOn(pokemonService, "fetchPokemonCardInfo").mockResolvedValue(mockedPokemonDetail);
 });
 
 afterAll(() => {

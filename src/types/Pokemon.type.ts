@@ -1,4 +1,4 @@
-export type PokemonLight = {
+export type PokemonList = {
   name: string;
   url: string;
 };
@@ -10,7 +10,7 @@ export type PaginatedResult<T> = {
   results: T[];
 };
 
-export type PokemonDetail = {
+export type PokemonCardInfo = {
   id: number;
   name: string;
   sprites: {
@@ -22,3 +22,53 @@ export type PokemonDetail = {
     };
   }[];
 };
+
+export type PokemonDetailPage = {
+  id: number;
+  name: string;
+  sprites: {
+    front_default: string;
+  };
+  types: {
+    type: {
+      name: string;
+    };
+  }[];
+  height: number;
+  weight: number;
+  abilities: {
+    ability: {
+      name: string;
+    };
+  }[];
+  stats: {
+    base_stat: number;
+    stat: {
+      name: string;
+    };
+  }[];
+};
+
+export type PokemonDescription = {
+  flavor_text_entries: {
+    flavor_text: string;
+  }[];
+};
+
+// export type EvolutionChain = {
+//   chain: {
+//     species: {
+//       name: string; //1ere evo
+//     };
+//     evolves_to?: {
+//       species: {
+//         name: string; //2eme evo
+//       };
+//       evolves_to?: {
+//         species: {
+//           name: string; //3eme evo
+//         };
+//       }[];
+//     }[];
+//   };
+// };

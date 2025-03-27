@@ -4,6 +4,7 @@
 }
 
 .cards {
+  margin-top: 79px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 30px;
@@ -41,6 +42,7 @@
 .card__footer__sprite img {
   height: 225px;
   width: 225px;
+  image-rendering: pixelated;
 }
 
 .card__footer {
@@ -53,7 +55,7 @@
 .card__footer__name {
   display: flex;
   justify-content: center;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 700;
 }
 
