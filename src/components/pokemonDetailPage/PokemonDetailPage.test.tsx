@@ -1,37 +1,21 @@
-import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
-import { describe, it, expect, vi } from "vitest";
+import { render, screen, waitFor } from "@testing-library/react";
+import { MemoryRouter, useParams } from "react-router-dom";
+import { describe, it, expect, vi, Mock } from "vitest";
 
-import PokemonDetailPageComponent from "./PokemonDetailPage";
+import { mockedPokemonDetailPage } from "../../App.test";
+import * as pokemonService from "../../services/Pokemon.service";
+
+import PokemonDetailPageCard from "./PokemonDetailPage";
+
+vi.mock("react-router-dom", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("react-router-dom")>();
+  return {
+    ...actual,
+    useParams: vi.fn(),
+  };
+});
 
 describe("PokemonDetailPageComponent", () => {
-  const mockProps = {
-    id: 1,
-    name: "Bulbasaur",
-    imageURL: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-    types: ["grass", "poison"],
-    height: 7,
-    weight: 69,
-    abilities: ["overgrow", "chlorophyll"],
-    stats: [
-      { name: "hp", base_stat: 45 },
-      { name: "attack", base_stat: 49 },
-      { name: "defense", base_stat: 49 },
-      { name: "special-attack", base_stat: 65 },
-      { name: "special-defense", base_stat: 65 },
-      { name: "speed", base_stat: 45 },
-    ],
-  };
-
-  it("renders loading state initially", () => {
-    render(
-      <MemoryRouter>
-        <PokemonDetailPageComponent {...mockProps} />
-      </MemoryRouter>,
-    );
-    expect(screen.getByText("Loading...")).toBeInTheDocument();
-  });
-
   it("renders the Pokemon details correctly", async () => {
     vi.spyOn(global, "fetch").mockResolvedValue({
       json: async () => ({
@@ -41,7 +25,7 @@ describe("PokemonDetailPageComponent", () => {
 
     render(
       <MemoryRouter>
-        <PokemonDetailPageComponent {...mockProps} />
+        <PokemonDetailPageCard />
       </MemoryRouter>,
     );
 
@@ -62,7 +46,7 @@ describe("PokemonDetailPageComponent", () => {
 
     render(
       <MemoryRouter>
-        <PokemonDetailPageComponent {...mockProps} />
+        <PokemonDetailPageCard />
       </MemoryRouter>,
     );
 
@@ -83,11 +67,39 @@ describe("PokemonDetailPageComponent", () => {
 
     render(
       <MemoryRouter>
-        <PokemonDetailPageComponent {...mockProps} />
+        <PokemonDetailPageCard />
       </MemoryRouter>,
     );
 
     expect(await screen.findByText("overgrow")).toBeInTheDocument();
     expect(screen.getByText("chlorophyll")).toBeInTheDocument();
+  });
+});
+
+describe("PokemonDetailPageCard", () => {
+  const mockedPokemonDesc = {
+    flavor_text_entries: [{ flavor_text: "test description" }],
+  };
+
+  it("should render Pokémon details", async () => {
+    (useParams as Mock).mockReturnValue({ id: "1" });
+    vi.spyOn(pokemonService, "fetchPokemonPageDetail").mockResolvedValue(mockedPokemonDetailPage);
+    vi.spyOn(pokemonService, "fetchPokemonDescription").mockResolvedValue(mockedPokemonDesc);
+
+    render(
+      <MemoryRouter initialEntries={["/pokemon/1"]}>
+        <PokemonDetailPageCard />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByText("Loading...")).toBeInTheDocument();
+
+    await waitFor(() => expect(screen.getByText("bulbasaur")).toBeInTheDocument());
+
+    expect(screen.getByText("GRASS")).toBeInTheDocument();
+    expect(screen.getByText("POISON")).toBeInTheDocument();
+    expect(screen.getByText("overgrow")).toBeInTheDocument();
+    expect(screen.getByText("HP: 45")).toBeInTheDocument();
+    expect(screen.getByText("Weight: 69")).toBeInTheDocument();
   });
 });
