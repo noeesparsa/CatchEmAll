@@ -20,7 +20,6 @@ const PokemonDetailPageCard: React.FC = () => {
   const [pokemon, setPokemon] = useState<PokemonDetailPage | null>(null);
   const [description, setDescription] = useState<string>("");
 
-  console.log("id", id);
   useEffect(() => {
     const loadPokemonDetail = async (): Promise<void> => {
       try {
@@ -29,11 +28,9 @@ const PokemonDetailPageCard: React.FC = () => {
             `https://pokeapi.co/api/v2/pokemon/${id}`,
           );
           setPokemon(PokemonCardInfo);
-          console.log(PokemonCardInfo);
         }
       } catch (error) {
         console.error("Failed to load Pokémon detail", error);
-        console.log(error);
       }
     };
 
@@ -68,8 +65,6 @@ const PokemonDetailPageCard: React.FC = () => {
   };
 
   if (!pokemon || !description) {
-    console.log("pokemon", pokemon);
-    console.log("description", description);
     return <div className="loading">Loading...</div>;
   }
 
