@@ -33,17 +33,6 @@ export const mockedPokemonDetailMore = {
   types: [{ type: { name: "electric" } }],
 };
 
-export const mockedPokemonDetailPage = {
-  id: 1,
-  name: "bulbasaur",
-  sprites: { front_default: "bulbasaur.png" },
-  types: [{ type: { name: "grass" } }, { type: { name: "poison" } }],
-  weight: 69,
-  height: 7,
-  abilities: [{ ability: { name: "overgrow" } }],
-  stats: [{ stat: { name: "hp" }, base_stat: 45 }],
-};
-
 export const mockedPokemonDetailPageMore = {
   id: 45,
   name: "pikachu",
